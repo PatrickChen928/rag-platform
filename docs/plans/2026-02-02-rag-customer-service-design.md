@@ -136,7 +136,7 @@
 ## 项目结构
 
 ```
-rag-demo/
+rag-platform/
 ├── docker-compose.yml
 ├── backend/
 │   ├── app/
