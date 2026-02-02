@@ -12,6 +12,7 @@ from app.models import Conversation, Message
 from app.schemas import ChatRequest, ChatMessageResponse, ConversationResponse
 from app.services.retriever import retrieve_relevant_chunks
 from app.services.llm import stream_chat_response
+from app.db import async_session as async_session_factory
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
@@ -119,8 +120,5 @@ async def ask_question(data: ChatRequest, db: AsyncSession = Depends(get_db)):
             await save_db.commit()
 
         yield f"data: {json.dumps({'type': 'done'})}\n\n"
-
-    # Import session factory for saving in stream
-    from app.db import async_session as async_session_factory
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
